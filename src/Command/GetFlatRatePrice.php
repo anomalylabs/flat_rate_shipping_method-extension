@@ -3,6 +3,7 @@
 use Anomaly\ConfigurationModule\Configuration\Contract\ConfigurationRepositoryInterface;
 use Anomaly\OrdersModule\Order\Contract\OrderInterface;
 use Anomaly\ShippingModule\Method\Extension\MethodExtension;
+use Illuminate\Contracts\Bus\SelfHandling;
 
 /**
  * Class GetFlatRatePrice
@@ -12,7 +13,7 @@ use Anomaly\ShippingModule\Method\Extension\MethodExtension;
  * @author        Ryan Thompson <ryan@pyrocms.com>
  * @package       Anomaly\FlatRateShippingMethodExtension\Command
  */
-class GetFlatRatePrice
+class GetFlatRatePrice implements SelfHandling
 {
 
     /**
