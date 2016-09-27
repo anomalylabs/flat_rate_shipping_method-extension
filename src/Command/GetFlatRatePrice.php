@@ -3,6 +3,7 @@
 use Anomaly\ConfigurationModule\Configuration\Contract\ConfigurationRepositoryInterface;
 use Anomaly\OrdersModule\Order\Contract\OrderInterface;
 use Anomaly\ShippingModule\Method\Extension\MethodExtension;
+use Anomaly\Streams\Platform\Support\Currency;
 use Illuminate\Contracts\Bus\SelfHandling;
 
 /**
@@ -17,33 +18,44 @@ class GetFlatRatePrice implements SelfHandling
 {
 
     /**
-     * The order instance.
+     * The method extension.
      *
-     * @var OrderInterface
+     * @var MethodExtension
      */
-    protected $order;
+    protected $extension;
+
+    /**
+     * The shipping parameters.
+     *
+     * @var array
+     */
+    protected $parameters;
 
     /**
      * Create a new GetFlatRatePrice instance.
      *
      * @param MethodExtension $extension
-     * @param OrderInterface  $order
+     * @param array           $parameters
      */
-    public function __construct(OrderInterface $order)
+    public function __construct(MethodExtension $extension, array $parameters = [])
     {
-        $this->order = $order;
+        $this->extension  = $extension;
+        $this->parameters = $parameters;
     }
 
     /**
      * Handle the command.
      *
      * @param ConfigurationRepositoryInterface $configuration
-     * @return \Anomaly\Streams\Platform\Addon\FieldType\FieldTypePresenter|null
+     * @param Currency                         $currency
+     * @return float
      */
-    public function handle(ConfigurationRepositoryInterface $configuration)
+    public function handle(ConfigurationRepositoryInterface $configuration, Currency $currency)
     {
-        $method = $this->order->getShippingMethod();
+        $method = $this->extension->getMethod();
 
-        return $configuration->value('anomaly.extension.flat_rate_shipping_method::price', $method->getSlug());
+        return $currency->normalize(
+            $configuration->value('anomaly.extension.flat_rate_shipping_method::price', $method->getId())
+        );
     }
 }

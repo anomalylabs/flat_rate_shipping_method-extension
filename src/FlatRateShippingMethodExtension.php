@@ -3,6 +3,7 @@
 use Anomaly\FlatRateShippingMethodExtension\Command\GetFlatRatePrice;
 use Anomaly\OrdersModule\Order\Contract\OrderInterface;
 use Anomaly\ShippingModule\Method\Extension\MethodExtension;
+use Anomaly\ShippingModule\Shippable\Contract\ShippableInterface;
 
 /**
  * Class FlatRateShippingMethodExtension
@@ -24,14 +25,14 @@ class FlatRateShippingMethodExtension extends MethodExtension
     protected $provides = 'anomaly.module.shipping::method.flat_rate';
 
     /**
-     * Return a quote for an order.
+     * Return a shipping quote.
      *
-     * @param OrderInterface $order
-     * @throws \Exception
+     * @param ShippableInterface $shippable
+     * @param array              $parameters
      * @return float
      */
-    public function quote(OrderInterface $order)
+    public function quote(ShippableInterface $shippable, array $parameters = [])
     {
-        return $this->dispatch(new GetFlatRatePrice($order));
+        return $this->dispatch(new GetFlatRatePrice($this, $parameters));
     }
 }
