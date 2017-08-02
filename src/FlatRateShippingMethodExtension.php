@@ -1,9 +1,8 @@
 <?php namespace Anomaly\FlatRateShippingMethodExtension;
 
 use Anomaly\FlatRateShippingMethodExtension\Command\GetFlatRatePrice;
-use Anomaly\OrdersModule\Order\Contract\OrderInterface;
 use Anomaly\ShippingModule\Method\Extension\MethodExtension;
-use Anomaly\ShippingModule\Shippable\Contract\ShippableInterface;
+use Anomaly\StoreModule\Contract\ShippableInterface;
 
 /**
  * Class FlatRateShippingMethodExtension
@@ -28,7 +27,7 @@ class FlatRateShippingMethodExtension extends MethodExtension
      * Return a shipping quote.
      *
      * @param ShippableInterface $shippable
-     * @param array              $parameters
+     * @param array $parameters
      * @return float
      */
     public function quote(ShippableInterface $shippable, array $parameters = [])

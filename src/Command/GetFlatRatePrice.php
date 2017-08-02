@@ -1,7 +1,6 @@
 <?php namespace Anomaly\FlatRateShippingMethodExtension\Command;
 
 use Anomaly\ConfigurationModule\Configuration\Contract\ConfigurationRepositoryInterface;
-use Anomaly\OrdersModule\Order\Contract\OrderInterface;
 use Anomaly\ShippingModule\Method\Extension\MethodExtension;
 use Anomaly\Streams\Platform\Support\Currency;
 use Illuminate\Contracts\Bus\SelfHandling;
@@ -35,7 +34,7 @@ class GetFlatRatePrice implements SelfHandling
      * Create a new GetFlatRatePrice instance.
      *
      * @param MethodExtension $extension
-     * @param array           $parameters
+     * @param array $parameters
      */
     public function __construct(MethodExtension $extension, array $parameters = [])
     {
@@ -47,7 +46,7 @@ class GetFlatRatePrice implements SelfHandling
      * Handle the command.
      *
      * @param ConfigurationRepositoryInterface $configuration
-     * @param Currency                         $currency
+     * @param Currency $currency
      * @return float
      */
     public function handle(ConfigurationRepositoryInterface $configuration, Currency $currency)

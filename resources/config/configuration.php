@@ -1,5 +1,5 @@
 <?php
 
 return [
-    'price' => 'anomaly.field_type.decimal'
+    'price' => 'anomaly.field_type.decimal',
 ];
