@@ -2,18 +2,17 @@
 
 use Anomaly\ConfigurationModule\Configuration\Contract\ConfigurationRepositoryInterface;
 use Anomaly\ShippingModule\Method\Extension\MethodExtension;
+use Anomaly\StoreModule\Contract\AddressInterface;
 use Anomaly\Streams\Platform\Support\Currency;
-use Illuminate\Contracts\Bus\SelfHandling;
 
 /**
  * Class GetFlatRatePrice
  *
- * @link          http://pyrocms.com/
- * @author        PyroCMS, Inc. <support@pyrocms.com>
- * @author        Ryan Thompson <ryan@pyrocms.com>
- * @package       Anomaly\FlatRateShippingMethodExtension\Command
+ * @link   http://pyrocms.com/
+ * @author PyroCMS, Inc. <support@pyrocms.com>
+ * @author Ryan Thompson <ryan@pyrocms.com>
  */
-class GetFlatRatePrice implements SelfHandling
+class GetFlatRatePrice
 {
 
     /**
@@ -24,22 +23,23 @@ class GetFlatRatePrice implements SelfHandling
     protected $extension;
 
     /**
-     * The shipping parameters.
+     * The shipping address.
      *
      * @var array
      */
-    protected $parameters;
+    protected $address;
 
     /**
      * Create a new GetFlatRatePrice instance.
      *
      * @param MethodExtension $extension
-     * @param array $parameters
+     * @param AddressInterface $address
+     * @internal param array $address
      */
-    public function __construct(MethodExtension $extension, array $parameters = [])
+    public function __construct(MethodExtension $extension, AddressInterface $address)
     {
-        $this->extension  = $extension;
-        $this->parameters = $parameters;
+        $this->extension = $extension;
+        $this->address   = $address;
     }
 
     /**
@@ -55,6 +55,7 @@ class GetFlatRatePrice implements SelfHandling
 
         return $currency->normalize(
             $configuration->value('anomaly.extension.flat_rate_shipping_method::price', $method->getId())
+            + $method->getHandlingFee()
         );
     }
 }
