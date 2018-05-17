@@ -3,7 +3,7 @@
 use Anomaly\FlatRateShippingMethodExtension\Command\GetFlatRatePrice;
 use Anomaly\ShippingModule\Method\Extension\MethodExtension;
 use Anomaly\StoreModule\Contract\AddressInterface;
-use Anomaly\StoreModule\Contract\ShippableInterface;
+use Anomaly\ShippingModule\Shipping\Contract\ShippableInterface;
 
 /**
  * Class FlatRateShippingMethodExtension
